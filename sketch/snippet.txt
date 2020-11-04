@@ -1,0 +1,27 @@
+namespace kaleidoscope {
+class FocusLayerCommand : public Plugin {
+ public:
+  FocusLayerCommand() {}
+
+  EventHandlerResult onFocusEvent(const char *command) {
+    const int numLayers = 3;
+    const char *cmd = PSTR("layers");
+
+    if (::Focus.handleHelp(command, cmd))
+      return EventHandlerResult::OK;
+
+    if (strcmp_P(command, cmd) == 0) {
+      char res[numLayers] = {'0',};
+      for (int i = 0; i < numLayers; ++i) {
+        res[i] = Layer.isActive(i) ? 't' : 'f';
+        }
+      ::Focus.send(res);
+      return EventHandlerResult::EVENT_CONSUMED;
+    }
+    
+    return EventHandlerResult::OK;
+  }
+};
+}
+
+kaleidoscope::FocusLayerCommand FocusLayerCommand;
