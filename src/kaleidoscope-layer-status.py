@@ -46,6 +46,7 @@ def callback(icon):
         # full response received - parse it
         if "." in line:
             #print(response)
+            time.sleep(0.1)
 
             layers = list(response)
             
